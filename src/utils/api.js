@@ -7,7 +7,7 @@ const API_ROOT = settings.API_ROOT;
 export const api_routes = {
   user: {
     login: API_ROOT + "oauth/token",
-    signup: API_SERVER + "auth/signup",
+    signup: API_SERVER + "customer-login",
     me: API_SERVER + "user"
   },
   chat: {

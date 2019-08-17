@@ -73,7 +73,7 @@ export default {
         })
         .then(() => {
           this.$refs.loadingButton.stopLoading();
-          this.$router.push("/");
+          this.$router.push("dashboard");
         })
         .catch(error => {
           this.$refs.loadingButton.stopLoading();

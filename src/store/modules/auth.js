@@ -42,11 +42,18 @@ const actions = {
         });
     });
   },
-  [AUTH_SIGNUP]: ({ commit }, user) => {
+  [AUTH_SIGNUP]: ({ commit, dispatch }, user) => {
     return new Promise((resolve, reject) => {
       commit(AUTH_REQUEST);
       apiCall({ url: api_routes.user.signup, data: user, method: "post" })
         .then(resp => {
+          console.log('customer response', resp);
+          localStorage.setItem("user-token", resp.access_token);
+          // Here set the header of your ajax library to the token value.
+          // example with axios
+          // axios.defaults.headers.common['Authorization'] = resp.token
+          commit(AUTH_SUCCESS, resp);
+          dispatch(USER_REQUEST);
           resolve(resp);
         })
         .catch(err => {
