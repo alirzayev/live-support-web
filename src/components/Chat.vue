@@ -85,6 +85,7 @@ export default {
   name: "Chat",
   methods: {
     isMe(id) {
+      console.log(id, this.me.id);
       return this.me.id === id;
     },
     sendMessage() {
@@ -124,7 +125,7 @@ export default {
       .listen("MessageSent", e => {
         console.log("event object", e);
         let message = {};
-        message.id = e.message.id
+        message.id = e.message.id;
         message.user_id = e.message.user_id;
         message.user = e.user;
         message.text = e.message.text;

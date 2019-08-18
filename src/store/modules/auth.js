@@ -28,6 +28,7 @@ const actions = {
       apiCall({ url: api_routes.user.login, data: user, method: "post" })
         .then(resp => {
           localStorage.setItem("user-token", resp.access_token);
+          console.log('auth', resp)
           // Here set the header of your ajax library to the token value.
           // example with axios
           // axios.defaults.headers.common['Authorization'] = resp.token
