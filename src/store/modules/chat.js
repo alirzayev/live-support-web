@@ -1,4 +1,8 @@
-import { CHAT_CONVERSATIONS, CHAT_CONVERSATION } from "../actions/chat";
+import {
+  CHAT_CONVERSATIONS,
+  CHAT_CONVERSATION,
+  SEND_MESSAGE, PUSH_MESSAGE
+} from "../actions/chat";
 import { apiCall, api_routes } from "@/utils/api";
 
 const state = {
@@ -31,6 +35,19 @@ const actions = {
       .catch(err => {
         console.log(err);
       });
+  },
+
+  [SEND_MESSAGE]: ({ commit }, data) => {
+    apiCall({
+      url: api_routes.chat.messages, data: data, method: "post"
+    })
+      .then(resp => {
+        console.log('message', resp);
+        commit(SEND_MESSAGE, resp);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 };
 
@@ -40,6 +57,12 @@ const mutations = {
   },
   [CHAT_CONVERSATION]: (state, resp) => {
     state.conversation = resp.data;
+  },
+  [SEND_MESSAGE]: (state, resp) => {
+    state.message = resp.data;
+  },
+  [PUSH_MESSAGE]: (state, message) => {
+    state.conversation.messages.push(message)
   }
 };
 

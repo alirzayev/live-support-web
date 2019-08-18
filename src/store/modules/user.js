@@ -2,7 +2,7 @@ import { USER_REQUEST, USER_ERROR, USER_SUCCESS } from "../actions/user";
 import { apiCall, api_routes } from "@/utils/api";
 import { AUTH_LOGOUT } from "../actions/auth";
 
-const state = { status: "", profile: {} };
+const state = { status: "", profile:JSON.parse(localStorage.getItem("user")) || {} };
 
 const getters = {
   getProfile: state => state.profile,
@@ -14,6 +14,7 @@ const actions = {
     commit(USER_REQUEST);
     apiCall({ url: api_routes.user.me })
       .then(resp => {
+        localStorage.setItem("user", JSON.stringify(resp));
         commit(USER_SUCCESS, resp);
       })
       .catch(err => {

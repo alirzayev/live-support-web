@@ -25,7 +25,7 @@
               </div>
             </div>
           </div>
-          <Chat v-else :conversation="conversation" :isMe="isMe()"></Chat>
+          <Chat v-else :conversation="conversation" :me="me"></Chat>
       </div>
       </div>
     </div>
@@ -52,6 +52,11 @@ export default {
       conversation: null
     };
   },
+  computed: {
+    me() {
+      return this.$store.getters.getProfile;
+    }
+  },
   methods: {
     register() {
       this.$refs.loadingButton.startLoading();
@@ -66,8 +71,7 @@ export default {
             text: "Successfully joined to " + this.$store.getters.appName
           });
           this.$router.push({
-            name: "customer chat",
-            params: { id: response.conversation.id }
+            path: "/conversations/" + response.conversation.id
           });
         })
         .catch(error => {
@@ -79,9 +83,6 @@ export default {
     },
     logout: function() {
       this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push("/login"));
-    },
-    isMe(id) {
-      return this.me.id === id;
     }
   },
   mounted() {

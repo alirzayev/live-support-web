@@ -1,5 +1,6 @@
 import axios from "axios";
 import { settings } from "@/settings";
+import router from "./../router";
 
 const API_SERVER = settings.API_SERVER;
 const API_ROOT = settings.API_ROOT;
@@ -11,7 +12,8 @@ export const api_routes = {
     me: API_SERVER + "user"
   },
   chat: {
-    conversations: API_SERVER + "conversations"
+    conversations: API_SERVER + "conversations",
+    messages: API_SERVER + "messages"
   }
 };
 
@@ -32,9 +34,12 @@ export const apiCall = ({ url, method, ...args }) =>
           resolve(resp.data);
         })
         .catch(error => {
+          console.log("error", error.response);
+          router.push("/");
           reject(error);
         });
     } catch (err) {
-      reject(new Error(err));
+      console.log("error", err);
+      reject(new Error(err.response));
     }
   });

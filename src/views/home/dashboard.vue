@@ -17,7 +17,7 @@
                             uk-toggle="target: .button-label">
                         <span class="button-label">Logout</span>
                     </button>
-                    <Chat :conversation="conversation" :me="me"></Chat>
+                    <Chat id="chat-container" style="width: 600px; max-height: 400px; overflow-y: auto; " :conversation="conversation" :me="me"></Chat>
                 </div>
             </div>
         </div>
@@ -58,6 +58,10 @@ export default {
   mounted() {
     this.$store.dispatch(CHAT_CONVERSATIONS).then(() => {});
     this.$store.dispatch(USER_REQUEST).then(() => {});
+  },
+  updated() {
+    var container = this.$el.querySelector("#chat-container");
+    container.scrollTop = container.scrollHeight;
   }
 };
 </script>

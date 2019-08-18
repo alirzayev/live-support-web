@@ -65,7 +65,7 @@ const actions = {
     return new Promise(resolve => {
       commit(AUTH_LOGOUT);
       localStorage.removeItem("user-token");
-      router.push("/login");
+      //router.push("/login");
       resolve();
     });
   }

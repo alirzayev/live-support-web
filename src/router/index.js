@@ -2,10 +2,12 @@ import Vue from "vue";
 import Router from "vue-router";
 import store from "../store";
 import Login from "@/views/auth/login";
-import Register from "@/views/auth/customer";
+import CustomerHome from "@/views/auth/customer";
 import CustomerChat from "@/views/auth/customer/start";
 import App from "@/views/layouts/App";
 import Dashboard from "@/views/home/dashboard";
+import { CHAT_CONVERSATION } from "../store/actions/chat";
+import { USER_REQUEST } from "../store/actions/user";
 
 Vue.use(Router);
 
@@ -25,23 +27,22 @@ const ifAuthenticated = (to, from, next) => {
   next("/login");
 };
 
-const ifNoConversation = (to, from, next) => {
-  if (to.params.id) {
-    next();
-    return;
-  }
-  next("/");
-};
 
 export default new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
     {
+      path: "/",
+      name: "home",
+      component: CustomerHome,
+      //beforeEnter: ifAuthenticated
+    },
+    {
       path: "/dashboard",
       name: "app",
       component: App,
-      beforeEnter: ifAuthenticated,
+      //beforeEnter: ifAuthenticated,
       children: [
         {
           path: "",
@@ -54,19 +55,12 @@ export default new Router({
       path: "/login",
       name: "login",
       component: Login
-      // beforeEnter: ifNotAuthenticated
+      //beforeEnter: ifNotAuthenticated
     },
     {
-      path: "/",
-      name: "home",
-      component: Register
-      // beforeEnter: ifNotAuthenticated
-    },
-    {
-      path: "/conversations",
+      path: "/conversations/:id",
       name: "customer chat",
       component: CustomerChat,
-      beforeEnter: ifNoConversation
     }
   ]
 });

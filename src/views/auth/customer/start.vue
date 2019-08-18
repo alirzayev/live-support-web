@@ -1,10 +1,10 @@
 <template>
-  <div class="auth-page loading">
-    <div uk-height-viewport="offset-bottom: 80px">
-      <div class="uk-flex uk-flex-center uk-flex-row">
-          <Chat :conversation="conversation" :me="me"></Chat>
-      </div>
-      </div>
+    <div class="auth-page loading">
+        <div uk-height-viewport="offset-bottom: 80px" class="uk-flex uk-flex-center uk-flex-row">
+            <div>
+                <Chat id="chat-container" style="width: 600px; height: 400px; overflow-y: auto; " :conversation="conversation" :me="me"></Chat>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -14,6 +14,7 @@ import Chat from "../../../components/Chat";
 import { CHAT_CONVERSATION } from "../../../store/actions/chat";
 import { USER_REQUEST } from "../../../store/actions/user";
 import { AUTH_LOGOUT } from "../../../store/actions/auth";
+
 export default {
   components: { Chat },
   data() {
@@ -21,7 +22,7 @@ export default {
       img: img
     };
   },
-  computed:{
+  computed: {
     conversation() {
       return this.$store.getters.conversation;
     },
@@ -38,12 +39,13 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch(USER_REQUEST).then(() => {});
-
+    this.$store.dispatch(USER_REQUEST);
     let conversation_id = this.$route.params.id;
-    console.log('route', this.$route)
-    console.log(this.$route);
-    this.loadMessages(conversation_id);
+    this.$store.dispatch(CHAT_CONVERSATION, conversation_id).then(() => {});
+  },
+  updated() {
+    var container = this.$el.querySelector("#chat-container");
+    container.scrollTop = container.scrollHeight;
   }
 };
 </script>

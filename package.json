@@ -30,7 +30,9 @@
   "dependencies": {
     "axios": "^0.18.1",
     "ev-emitter": "^1.1.1",
+    "laravel-echo": "^1.5.4",
     "lodash": "^4.17.15",
+    "pusher-js": "^5.0.0",
     "uikit": "^3.0.0-rc.12",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
