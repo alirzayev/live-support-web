@@ -28,7 +28,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "ev-emitter": "^1.1.1",
     "laravel-echo": "^1.5.4",
     "lodash": "^4.17.15",
